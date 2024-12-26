@@ -6,6 +6,8 @@ void main(){
   runApp(AnaMain());
 
 }
+
+// Class ismini AnaMain yapmak yerine MyApp veya uygulamanın adını yapmak daha iyi olur.
 class AnaMain extends StatelessWidget {
   const AnaMain({super.key});
 

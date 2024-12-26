@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+// Zorunlu olmasa da bir sayfaya ait widgetlerı sayfa classı yazmak daha yaygın bir kullanım. Örnek ekledim.
+
 class AnaSayfa extends StatefulWidget {
   const AnaSayfa({super.key});
 
@@ -25,6 +27,16 @@ class _AnaSayfaState extends State<AnaSayfa> {
 Widget buildBody(context){
   bool kontrol1 = true;
   bool kontrol2 = false;
+
+  // Sayfa class'ı içinde widget
+  // FloatingActionButton buildFloatingActionButton(){
+  //   return FloatingActionButton(
+  //     onPressed: (){},
+  //     child: Icon(Icons.add,color: Colors.white,),
+  //   backgroundColor: Colors.teal,
+  //   );
+  // }
+
   return Column(
     children: [
       Center(child: Text("Görevlerim",style: TextStyle(fontSize: 30),)),

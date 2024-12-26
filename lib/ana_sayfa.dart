@@ -11,6 +11,15 @@ class AnaSayfa extends StatefulWidget {
 
 class _AnaSayfaState extends State<AnaSayfa> {
 
+  // Sayfa class'ı içinde widget
+  // FloatingActionButton buildFloatingActionButton(){
+  //   return FloatingActionButton(
+  //     onPressed: (){},
+  //     child: Icon(Icons.add,color: Colors.white,),
+  //   backgroundColor: Colors.teal,
+  //   );
+  // }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,17 +34,8 @@ class _AnaSayfaState extends State<AnaSayfa> {
 
 // BODY KODLARIM
 Widget buildBody(context){
-  bool kontrol1 = true;
-  bool kontrol2 = false;
-
-  // Sayfa class'ı içinde widget
-  // FloatingActionButton buildFloatingActionButton(){
-  //   return FloatingActionButton(
-  //     onPressed: (){},
-  //     child: Icon(Icons.add,color: Colors.white,),
-  //   backgroundColor: Colors.teal,
-  //   );
-  // }
+  bool kontrol1 = true;   // Bu değişkenlerin yeri yanlış. Build fonksiyonu sayfada her setState
+  bool kontrol2 = false;  // değişiminde çalışır bu yüzden değişkenler hep sabit kalır.
 
   return Column(
     children: [

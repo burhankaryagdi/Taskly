@@ -1,16 +1,10 @@
 # taskly
 
-A new Flutter project.
+## EK NOTLAR
 
-## Getting Started
+Uygulama klasörleme yapısının bir düzeni olmalı. Örneğin tüm widgetlar views klasörü oluşturularak içine atılmalı.
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Yararlı olabilecek kaynaklar:
+- [Dosya isimlendirmeleri](https://www.verimix.com.tr/yazilimda-adlandirma-kurallari/#elementor-toc__heading-anchor-13)
+- [Değişken isimlendirme](https://ibrahim-kurce.medium.com/yaz%C4%B1l%C4%B1mda-i%CC%87simlendirme-7fcc3d3d6965)
+- [Yazılım Versiyonlama](https://hrzafer.com/yazilim-versiyon-numaralari)

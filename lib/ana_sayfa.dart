@@ -1,24 +1,18 @@
 import 'package:flutter/material.dart';
-
-// Zorunlu olmasa da bir sayfaya ait widgetlerı sayfa classı yazmak daha yaygın bir kullanım. Örnek ekledim.
-
 class AnaSayfa extends StatefulWidget {
   const AnaSayfa({super.key});
+
+
 
   @override
   State<AnaSayfa> createState() => _AnaSayfaState();
 }
 
+bool kontrol1 = true;
+bool kontrol2 = false;
+
 class _AnaSayfaState extends State<AnaSayfa> {
 
-  // Sayfa class'ı içinde widget
-  // FloatingActionButton buildFloatingActionButton(){
-  //   return FloatingActionButton(
-  //     onPressed: (){},
-  //     child: Icon(Icons.add,color: Colors.white,),
-  //   backgroundColor: Colors.teal,
-  //   );
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -34,8 +28,6 @@ class _AnaSayfaState extends State<AnaSayfa> {
 
 // BODY KODLARIM
 Widget buildBody(context){
-  bool kontrol1 = true;   // Bu değişkenlerin yeri yanlış. Build fonksiyonu sayfada her setState
-  bool kontrol2 = false;  // değişiminde çalışır bu yüzden değişkenler hep sabit kalır.
 
   return Column(
     children: [

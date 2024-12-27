@@ -3,13 +3,12 @@ import 'package:taskly/ana_sayfa.dart';
 
 void main(){
 
-  runApp(AnaMain());
+  runApp(MyApp());
 
 }
 
-// Class ismini AnaMain yapmak yerine MyApp veya uygulamanın adını yapmak daha iyi olur.
-class AnaMain extends StatelessWidget {
-  const AnaMain({super.key});
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {

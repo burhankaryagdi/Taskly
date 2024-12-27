@@ -2,171 +2,163 @@ import 'package:flutter/material.dart';
 class AnaSayfa extends StatefulWidget {
   const AnaSayfa({super.key});
 
-
-
   @override
   State<AnaSayfa> createState() => _AnaSayfaState();
 }
 
-bool kontrol1 = true;
-bool kontrol2 = false;
-
 class _AnaSayfaState extends State<AnaSayfa> {
-
-
+  List<Map<String,String>> notes = [];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: buildAppBar(),
-      floatingActionButton: buildFloatingActionButton(),
-      body: buildBody(context),
-    );
-  }
-}
 
-
-
-// BODY KODLARIM
-Widget buildBody(context){
-
-  return Column(
-    children: [
-      Center(child: Text("Görevlerim",style: TextStyle(fontSize: 30),)),
-      GestureDetector(
-        onTap: (){
-          showDialog(
+      //FLOATİNGACTİONBUTTON KODLARIM
+      floatingActionButton:  FloatingActionButton(
+        onPressed: (){
+          showModalBottomSheet(
               context: context,
               builder: (BuildContext context){
-                return Dialog(
-                  backgroundColor: Colors.white.withOpacity(0.9),
-                  shape: RoundedRectangleBorder(
-                  borderRadius:BorderRadius.circular(15)
-                  ),
-                  child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                    child: SingleChildScrollView(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                        SizedBox(
-                       width: double.maxFinite,
-                          child: TextField(
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              labelText: "Başlık Alanı",
-                            ),
-                          ),
-                         ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          SizedBox(
-                            width : double.maxFinite,
-                            child: TextField(
-                              style: TextStyle(fontSize: 20.0,height:10),
-                              decoration: InputDecoration(
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(20),
-                                ),
-                                labelText: "Açıklama Alanı...",
-                              ),
-                            ),
-                          ),
-                          Row(
-                            children: [
-                              ElevatedButton(
-                                  onPressed: (){},
-                                  child: Text("Kaydet")
-                              ),
-                              ElevatedButton(
-                                  onPressed: (){},
-                                  child: Text("Sil")
-                              ),
-                              ElevatedButton(
-                                  onPressed: (){
-                                    Navigator.of(context).pop();
-                                  },
-                                  child: Text("Kapat")
-                              ),
-                            ],
-                          ),
-                    ],
-                  ),
-                  ),
-                  ),
+                return Wrap(
+                  children: [
+                    ListTile(
+                      leading: Icon(Icons.note_add),
+                      title: Text('Not Ekle'),
+                      onTap: (){
+                        Navigator.pop(context);
+                        notEkle(context); // Not ekleme penceresini aç
+                      },
+                    ),
+                  ],
                 );
               },
           );
         },
-        child: Column(
-          children: [
-            Card(
-              color: Colors.teal,
-              elevation: 5,
-              shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-              child: ListTile(
-                title: Text("Başlık"),
-                subtitle: Text("Alt Başlığımız"),
-                leading: Checkbox(
-                  value:  kontrol1,
-                  onChanged: (bool? value){
-
-                  },
-                ),
-                trailing: Icon(Icons.keyboard_arrow_right),
-                iconColor: Colors.white,
-              ),
-            ),
-            Card(
-              color: Colors.teal,
-              elevation: 5,
-              shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-              child: ListTile(
-                title: Text("Başlık 2"),
-                subtitle: Text("Alt Başlığımız 2"),
-                leading: Checkbox(
-                  value: kontrol2,
-                  onChanged: (bool? value){
-
-                  },
-                ),
-                trailing: Icon(Icons.keyboard_arrow_right),
-                iconColor: Colors.white,
-              ),
-            ),
-
-          ],
-        ),
+        child: Icon(Icons.add,color: Colors.white,),
+        backgroundColor: Colors.teal,
       ),
-    ],
-  );
-}
 
 
-// FLOATİNG ACTİON BUTTON KODLARIM
-FloatingActionButton buildFloatingActionButton(){
-  return FloatingActionButton(
-    onPressed: (){},
-    child: Icon(Icons.add,color: Colors.white,),
-  backgroundColor: Colors.teal,
-  );
-}
+      //APPBAR KODLARIM
+      appBar: AppBar(
+        title: Text("Taskly",style: TextStyle(fontSize: 35),),
+        centerTitle: true,
+        backgroundColor: Colors.teal,
+        actions: [
+          IconButton(onPressed: (){}, icon: Icon(Icons.settings),color: Colors.white,)
+        ],
+        leading: IconButton(onPressed: (){},icon: Icon(Icons.menu),color: Colors.white,),
+      ),
 
 
-// APPBAR KODLARIM
-AppBar buildAppBar(){
-  return AppBar(
-    title: Text("Taskly",style: TextStyle(fontSize: 35),),
-    centerTitle: true,
-    backgroundColor: Colors.teal,
-    actions: [
-      IconButton(onPressed: (){}, icon: Icon(Icons.settings),color: Colors.white,)
-    ],
-    leading: IconButton(onPressed: (){},icon: Icon(Icons.menu),color: Colors.white,),
-  );
+      //BODY KODLARIM
+      body: notes.isEmpty ?
+      Center(
+        child: Text(
+          'Henüz Bir Not Eklenmedi!',style: TextStyle(fontSize: 25),
+        ),
+      ) : ListView.builder(
+          itemCount: notes.length,
+          itemBuilder: (context, index){
+          return Card(
+            color: Colors.teal,
+            elevation: 10,
+            shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
+          child: ListTile(
+            leading: Icon(Icons.note),
+            trailing: Icon(Icons.keyboard_arrow_right),
+            title: Text(notes[index]['baslik'] ?? ''),
+            subtitle: Text(notes[index]['icerik'] ?? ''),
+            onTap: (){
+              notGoster(
+                  context,
+                  notes[index]['baslik']??'',
+                  notes[index]['icerik']??'',
+              );
+            },
+          ),
+          );
+          }
+      ),
+    );
+  }
+
+  void notEkle(BuildContext context){
+    TextEditingController baslikController = TextEditingController();
+    TextEditingController icerikController = TextEditingController();
+
+    showDialog(
+        context: context,
+        builder: (BuildContext context){
+          return AlertDialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15),
+            ),
+            title: Text('Not Ekle',style: TextStyle(fontSize: 30),),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TextField(
+                controller: baslikController,
+              decoration: InputDecoration(
+                labelText: 'Başlık'
+              ),
+            ),
+                TextField(
+                  controller: icerikController,
+                  decoration: InputDecoration(labelText: 'İçerik'),
+                ),
+              ],
+            ),
+            actions: [
+              TextButton(
+                  child: Text('Kapat'),
+                  onPressed: (){
+                    Navigator.of(context).pop();
+                  },
+              ),
+              ElevatedButton(
+                  child: Text('Kaydet'),
+                  onPressed: (){
+                    setState(() {
+                      notes.add({
+                        'baslik':baslikController.text,
+                        'icerik' :icerikController.text,
+                      });
+                    });
+                    Navigator.of(context).pop();
+                  },
+              ),
+            ],
+          );
+        },
+    );
+  }//not ekle fonksiyonum
+
+void notGoster(BuildContext context,String baslik , String icerik){
+
+    showDialog(
+        context: context,
+        builder: (BuildContext context){
+          return AlertDialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15),
+            ),
+            title: Text(baslik),
+            content: Text(icerik),
+            actions: [
+              TextButton(
+                  child: Text("Kapat"),
+                  onPressed: (){
+                    Navigator.of(context).pop(); // Dialog'u kapat
+                  }
+              )
+            ],
+          );
+        },
+    );
+}//not göster fonksiyonum
+
+
 }
 

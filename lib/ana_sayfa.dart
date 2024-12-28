@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+
 class AnaSayfa extends StatefulWidget {
   const AnaSayfa({super.key});
 
@@ -51,46 +53,68 @@ class _AnaSayfaState extends State<AnaSayfa> {
 
 
       //BODY KODLARIM
-      body: notes.isEmpty ?
-      Center(
-        child: Text(
-          'Henüz Bir Not Eklenmedi!',style: TextStyle(fontSize: 25),
-        ),
-      ) : ListView.builder(
-          itemCount: notes.length,
-          itemBuilder: (context, index){
-          return Card(
-            color: Colors.teal,
-            elevation: 10,
-            shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
-          child: ListTile(
-            leading: Icon(Icons.note),
-            trailing: Icon(Icons.keyboard_arrow_right),
-            title: Text(notes[index]['baslik'] ?? ''),
-            subtitle: Text(notes[index]['icerik'] ?? ''),
-            onTap: (){
-              notGoster(
-                  context,
-                  notes[index]['baslik']??'',
-                  notes[index]['icerik']??'',
-              );
-            },
-          ),
-          );
-          }
-      ),
+      body: notes.isEmpty
+          ? Center(
+              child: Text(
+                'Henüz Bir Not Eklenmedi!',
+                style: TextStyle(fontSize: 25),
+              ),
+            )
+          : ListView.builder(
+              itemCount: notes.length,
+              itemBuilder: (context, index) {
+                return Card(
+                  color: Colors.teal,
+                  elevation: 10,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(25)),
+                  child: ListTile(
+                    leading: Icon(Icons.note),
+                    trailing: Icon(Icons.keyboard_arrow_right),
+                    title: Text(notes[index]['baslik'] ?? ''),
+                    subtitle: Column(
+                      children: [
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(notes[index]['anahtar'] ?? ''),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              '${notes[index]['tarih']}',
+                              style:
+                                  TextStyle(color: Colors.black, fontSize: 12),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    onTap: () {
+                      notGoster(
+                        context,
+                        notes[index]['baslik'] ?? '',
+                        notes[index]['icerik'] ?? '',
+                      );
+                    },
+                  ),
+                );
+              }),
     );
   }
 
-  void notEkle(BuildContext context){
+  void notEkle(BuildContext context) {
     TextEditingController baslikController = TextEditingController();
     TextEditingController icerikController = TextEditingController();
+    TextEditingController anahtarController = TextEditingController();
 
     showDialog(
-        context: context,
-        builder: (BuildContext context){
-          return AlertDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return SingleChildScrollView(
+          child: AlertDialog(
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15),
             ),
@@ -106,7 +130,13 @@ class _AnaSayfaState extends State<AnaSayfa> {
             ),
                 TextField(
                   controller: icerikController,
-                  decoration: InputDecoration(labelText: 'İçerik'),
+                  decoration: InputDecoration(labelText: 'Açıklama'),
+                ),
+                TextField(
+                  controller: anahtarController,
+                  decoration: InputDecoration(
+                      labelText: 'İçerik Konusu',
+                      counterText: 'Örn: Painting,Reading Books..'),
                 ),
               ],
             ),
@@ -118,13 +148,14 @@ class _AnaSayfaState extends State<AnaSayfa> {
                   },
               ),
               ElevatedButton(
-                  child: Text('Kaydet'),
-                  onPressed: (){
-                    setState(() {
-                      notes.add({
-                        'baslik':baslikController.text,
-                        'icerik' :icerikController.text,
-                      });
+                child: Text('Kaydet'),
+                onPressed: () {
+                  setState(() {
+                    notes.add({
+                      'baslik': baslikController.text,
+                      'icerik': icerikController.text,
+                      'anahtar': anahtarController.text,
+                      'tarih': DateFormat('dd MMM yyyy').format(DateTime.now()),
                     });
                     Navigator.of(context).pop();
                   },
@@ -145,7 +176,18 @@ void notGoster(BuildContext context,String baslik , String icerik){
               borderRadius: BorderRadius.circular(15),
             ),
             title: Text(baslik),
-            content: Text(icerik),
+            content: Column(
+              children: [
+                Text(icerik),
+                Text(""),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Text(DateFormat('dd MMM yyyy').format(DateTime.now())),
+                  ],
+                )
+              ],
+            ),
             actions: [
               TextButton(
                   child: Text("Kapat"),

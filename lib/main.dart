@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:taskly/ana_sayfa.dart';
 
-void main(){
-
+void main() {
   runApp(MyApp());
-
 }
 
 class MyApp extends StatelessWidget {

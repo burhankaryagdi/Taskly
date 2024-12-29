@@ -9,48 +9,61 @@ class AnaSayfa extends StatefulWidget {
 }
 
 class _AnaSayfaState extends State<AnaSayfa> {
-  List<Map<String,String>> notes = [];
+  List<Map<String, String>> notes = [];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       //FLOATİNGACTİONBUTTON KODLARIM
-      floatingActionButton:  FloatingActionButton(
-        onPressed: (){
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
           showModalBottomSheet(
-              context: context,
-              builder: (BuildContext context){
-                return Wrap(
-                  children: [
-                    ListTile(
-                      leading: Icon(Icons.note_add),
-                      title: Text('Not Ekle'),
-                      onTap: (){
-                        Navigator.pop(context);
-                        notEkle(context); // Not ekleme penceresini aç
-                      },
-                    ),
-                  ],
-                );
-              },
+            context: context,
+            builder: (BuildContext context) {
+              return Wrap(
+                children: [
+                  ListTile(
+                    leading: Icon(Icons.note_add),
+                    title: Text('Not Ekle'),
+                    trailing: Icon(Icons.keyboard_arrow_right),
+                    onTap: () {
+                      Navigator.pop(context);
+                      notEkle(context); // Not ekleme penceresini aç
+                    },
+                  ),
+                ],
+              );
+            },
           );
         },
-        child: Icon(Icons.add,color: Colors.white,),
+        child: Icon(
+          Icons.add,
+          color: Colors.white,
+        ),
         backgroundColor: Colors.teal,
       ),
-
 
       //APPBAR KODLARIM
       appBar: AppBar(
-        title: Text("Taskly",style: TextStyle(fontSize: 35),),
+        title: Text(
+          "Taskly",
+          style: TextStyle(fontSize: 35),
+        ),
         centerTitle: true,
         backgroundColor: Colors.teal,
         actions: [
-          IconButton(onPressed: (){}, icon: Icon(Icons.settings),color: Colors.white,)
+          IconButton(
+            onPressed: () {},
+            icon: Icon(Icons.settings),
+            color: Colors.white,
+          )
         ],
-        leading: IconButton(onPressed: (){},icon: Icon(Icons.menu),color: Colors.white,),
+        leading: IconButton(
+          onPressed: () {},
+          icon: Icon(Icons.menu),
+          color: Colors.white,
+        ),
       ),
-
 
       //BODY KODLARIM
       body: notes.isEmpty
@@ -70,7 +83,15 @@ class _AnaSayfaState extends State<AnaSayfa> {
                       borderRadius: BorderRadius.circular(25)),
                   child: ListTile(
                     leading: Icon(Icons.note),
-                    trailing: Icon(Icons.keyboard_arrow_right),
+                    trailing: TextButton(
+                      child: Text(
+                        "Güncelle",
+                        style: TextStyle(color: Colors.black),
+                      ),
+                      onPressed: () {
+                        notGuncelle(context, index);
+                      },
+                    ),
                     title: Text(notes[index]['baslik'] ?? ''),
                     subtitle: Column(
                       children: [
@@ -84,7 +105,7 @@ class _AnaSayfaState extends State<AnaSayfa> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              '${notes[index]['tarih']}',
+                              'Eklenme Tarihi: ${notes[index]['tarih']}',
                               style:
                                   TextStyle(color: Colors.black, fontSize: 12),
                             ),
@@ -118,16 +139,17 @@ class _AnaSayfaState extends State<AnaSayfa> {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15),
             ),
-            title: Text('Not Ekle',style: TextStyle(fontSize: 30),),
+            title: Text(
+              'Not Ekle',
+              style: TextStyle(fontSize: 30),
+            ),
             content: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 TextField(
-                controller: baslikController,
-              decoration: InputDecoration(
-                labelText: 'Başlık'
-              ),
-            ),
+                  controller: baslikController,
+                  decoration: InputDecoration(labelText: 'Başlık'),
+                ),
                 TextField(
                   controller: icerikController,
                   decoration: InputDecoration(labelText: 'Açıklama'),
@@ -142,10 +164,10 @@ class _AnaSayfaState extends State<AnaSayfa> {
             ),
             actions: [
               TextButton(
-                  child: Text('Kapat'),
-                  onPressed: (){
-                    Navigator.of(context).pop();
-                  },
+                child: Text('Kapat'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
               ),
               ElevatedButton(
                 child: Text('Kaydet'),
@@ -156,22 +178,25 @@ class _AnaSayfaState extends State<AnaSayfa> {
                       'icerik': icerikController.text,
                       'anahtar': anahtarController.text,
                       'tarih': DateFormat('dd MMM yyyy').format(DateTime.now()),
+                      'guncellemeTarihi': '',
                     });
-                    Navigator.of(context).pop();
-                  },
+                  });
+                  Navigator.of(context).pop();
+                },
               ),
             ],
-          );
-        },
+          ),
+        );
+      },
     );
-  }//not ekle fonksiyonum
+  } //not ekle fonksiyonum
 
-void notGoster(BuildContext context,String baslik , String icerik){
-
+  void notGoster(BuildContext context, String baslik, String icerik) {
     showDialog(
-        context: context,
-        builder: (BuildContext context){
-          return AlertDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return SingleChildScrollView(
+          child: AlertDialog(
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15),
             ),
@@ -183,7 +208,8 @@ void notGoster(BuildContext context,String baslik , String icerik){
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Text(DateFormat('dd MMM yyyy').format(DateTime.now())),
+                    Text(
+                        'Güncellenme Tarihi: ${DateFormat('dd MMM yyyy HH:mm').format(DateTime.now())}'),
                   ],
                 )
               ],
@@ -191,16 +217,72 @@ void notGoster(BuildContext context,String baslik , String icerik){
             actions: [
               TextButton(
                   child: Text("Kapat"),
-                  onPressed: (){
+                  onPressed: () {
                     Navigator.of(context).pop(); // Dialog'u kapat
-                  }
-              )
+                  })
             ],
-          );
-        },
+          ),
+        );
+      },
     );
-}//not göster fonksiyonum
+  } //not göster fonksiyonum
 
-
+  void notGuncelle(BuildContext context, int index) {
+    TextEditingController baslikController =
+        TextEditingController(text: notes[index]['baslik']);
+    TextEditingController icerikController =
+        TextEditingController(text: notes[index]['icerik']);
+    TextEditingController anahtarController =
+        TextEditingController(text: notes[index]['anahtar']);
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return SingleChildScrollView(
+            child: AlertDialog(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15),
+              ),
+              title: Text("Not Güncelle"),
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  TextField(
+                    controller: baslikController,
+                    decoration: InputDecoration(labelText: 'Başlık'),
+                  ),
+                  TextField(
+                    controller: icerikController,
+                    decoration: InputDecoration(labelText: 'Açıklama'),
+                  ),
+                  TextField(
+                    controller: anahtarController,
+                    decoration: InputDecoration(labelText: 'Anahtar Kelime'),
+                  ),
+                ],
+              ),
+              actions: [
+                TextButton(
+                  child: Text("Kapat"),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+                ElevatedButton(
+                  child: Text("Güncelle"),
+                  onPressed: () {
+                    setState(() {
+                      notes[index]['baslik'] = baslikController.text;
+                      notes[index]['icerik'] = icerikController.text;
+                      notes[index]['anahtar'] = anahtarController.text;
+                      notes[index]['guncellemeTarihi'] =
+                          DateFormat('dd MMM yyyy').format(DateTime.now());
+                    });
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            ),
+          );
+        });
+  } //Not Güncelle Fonskiyonum
 }
-

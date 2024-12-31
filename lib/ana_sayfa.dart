@@ -256,7 +256,7 @@ class _AnaSayfaState extends State<AnaSayfa> {
                   ),
                   TextField(
                     controller: anahtarController,
-                    decoration: InputDecoration(labelText: 'Anahtar Kelime'),
+                    decoration: InputDecoration(labelText: 'İçerik Konusu'),
                   ),
                 ],
               ),

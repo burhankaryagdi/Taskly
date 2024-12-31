@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:taskly/ana_sayfa.dart';
+import 'package:taskly/giris_yap_sayfa.dart';
 
 void main() {
   runApp(MyApp());
@@ -11,7 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: AnaSayfa(),
+      home: GirisYap(),
       debugShowCheckedModeBanner: false,
     );
   }

@@ -4,5 +4,5 @@ class SaydamPencereKontrol {
   String anahtar;
   dynamic tarih;
 
-  SaydamPencereKontrol(this.baslik, this.aciklama,this.anahtar,this.tarih);
+  SaydamPencereKontrol(this.baslik, this.aciklama, this.anahtar, this.tarih);
 }

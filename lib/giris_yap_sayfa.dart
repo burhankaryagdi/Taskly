@@ -14,8 +14,8 @@ class GirisYap extends StatefulWidget {
 class _GirisYapState extends State<GirisYap> {
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
-  bool isLoading =false;
-  String errorMessage ="";
+  bool isLoading = false;
+  String errorMessage = "";
 
   @override
   Widget build(BuildContext context) {
@@ -64,23 +64,23 @@ class _GirisYapState extends State<GirisYap> {
               SizedBox(
                 height: 10,
               ),
-              if(errorMessage.isNotEmpty)
+              if (errorMessage.isNotEmpty)
                 Text(
-                  errorMessage,style: TextStyle(color: Colors.red),
+                  errorMessage,
+                  style: TextStyle(color: Colors.red),
                 ),
-              isLoading ? CircularProgressIndicator() :
-              ElevatedButton(
-                child: Text(
-                  "Giriş Yap",
-                  style: TextStyle(fontSize: 25, color: Colors.blue[800]),
-                ),
-                onPressed: () {
-                  login(
-                    _emailController.text.trim(),
-                    _passwordController.text.trim()
-                  );
-                },
-              )
+              isLoading
+                  ? CircularProgressIndicator()
+                  : ElevatedButton(
+                      child: Text(
+                        "Giriş Yap",
+                        style: TextStyle(fontSize: 25, color: Colors.blue[800]),
+                      ),
+                      onPressed: () {
+                        login(_emailController.text.trim(),
+                            _passwordController.text.trim());
+                      },
+                    )
             ],
           ),
         ),
@@ -89,6 +89,10 @@ class _GirisYapState extends State<GirisYap> {
   }
 
   void login(String email, String password) async {
+    setState(() {
+      isLoading = true;
+    });
+
     final url = Uri.parse("https://dummyjson.com/users");
     try {
       final response = await http.get(url); //kullanıcı listesini getiriyor.
@@ -99,17 +103,17 @@ class _GirisYapState extends State<GirisYap> {
           (user) => user["email"] == email && user["password"] == password,
           orElse: () => null,
         );
-        if (user != null) { //Giriş Başarılı ise;
+        if (user != null) {
+          //Giriş Başarılı ise;
           Navigator.push(
               context, MaterialPageRoute(builder: (context) => AnaSayfa()));
         } else {
           // Kullanıcı Bulunamadi ise;
           setState(() {
-            errorMessage ="Geçersiz E-posta veya şifre!";
+            errorMessage = "Geçersiz E-posta veya şifre!";
           });
         }
-      }
-      else{
+      } else {
         //Api hatalı
         setState(() {
           errorMessage = "Sunucu Hatası ${response.statusCode}";
@@ -118,9 +122,9 @@ class _GirisYapState extends State<GirisYap> {
     } catch (e) {
       //Ağ Bağlantısı hatası
       setState(() {
-        errorMessage ="Bağlantı Hatası: $e";
+        errorMessage = "Bağlantı Hatası: $e";
       });
-    }finally{
+    } finally {
       setState(() {
         isLoading = false; //göstergeyi kapat
       });

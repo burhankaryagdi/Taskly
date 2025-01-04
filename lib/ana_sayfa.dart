@@ -23,9 +23,9 @@ class _AnaSayfaState extends State<AnaSayfa> {
               return Wrap(
                 children: [
                   ListTile(
-                    leading: Icon(Icons.note_add),
-                    title: Text('Not Ekle'),
-                    trailing: Icon(Icons.keyboard_arrow_right),
+                    leading: const Icon(Icons.note_add),
+                    title: const Text('Not Ekle'),
+                    trailing: const Icon(Icons.keyboard_arrow_right),
                     onTap: () {
                       Navigator.pop(context);
                       notEkle(context); // Not ekleme penceresini aç
@@ -36,16 +36,16 @@ class _AnaSayfaState extends State<AnaSayfa> {
             },
           );
         },
-        child: Icon(
+        backgroundColor: Colors.teal,
+        child: const Icon(
           Icons.add,
           color: Colors.white,
         ),
-        backgroundColor: Colors.teal,
       ),
 
       //APPBAR KODLARIM
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           "Taskly",
           style: TextStyle(fontSize: 35),
         ),
@@ -54,20 +54,20 @@ class _AnaSayfaState extends State<AnaSayfa> {
         actions: [
           IconButton(
             onPressed: () {},
-            icon: Icon(Icons.settings),
+            icon: const Icon(Icons.settings),
             color: Colors.white,
           )
         ],
         leading: IconButton(
           onPressed: () {},
-          icon: Icon(Icons.menu),
+          icon: const Icon(Icons.menu),
           color: Colors.white,
         ),
       ),
 
       //BODY KODLARIM
       body: notes.isEmpty
-          ? Center(
+          ? const Center(
               child: Text(
                 'Henüz Bir Not Eklenmedi!',
                 style: TextStyle(fontSize: 25),
@@ -82,9 +82,9 @@ class _AnaSayfaState extends State<AnaSayfa> {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(25)),
                   child: ListTile(
-                    leading: Icon(Icons.note),
+                    leading: const Icon(Icons.note),
                     trailing: TextButton(
-                      child: Text(
+                      child: const Text(
                         "Güncelle",
                         style: TextStyle(color: Colors.black),
                       ),
@@ -106,8 +106,8 @@ class _AnaSayfaState extends State<AnaSayfa> {
                           children: [
                             Text(
                               'Eklenme Tarihi: ${notes[index]['tarih']}',
-                              style:
-                                  TextStyle(color: Colors.black, fontSize: 12),
+                              style: const TextStyle(
+                                  color: Colors.black, fontSize: 12),
                             ),
                           ],
                         ),
@@ -139,7 +139,7 @@ class _AnaSayfaState extends State<AnaSayfa> {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15),
             ),
-            title: Text(
+            title: const Text(
               'Not Ekle',
               style: TextStyle(fontSize: 30),
             ),
@@ -148,15 +148,15 @@ class _AnaSayfaState extends State<AnaSayfa> {
               children: [
                 TextField(
                   controller: baslikController,
-                  decoration: InputDecoration(labelText: 'Başlık'),
+                  decoration: const InputDecoration(labelText: 'Başlık'),
                 ),
                 TextField(
                   controller: icerikController,
-                  decoration: InputDecoration(labelText: 'Açıklama'),
+                  decoration: const InputDecoration(labelText: 'Açıklama'),
                 ),
                 TextField(
                   controller: anahtarController,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                       labelText: 'İçerik Konusu',
                       counterText: 'Örn: Painting,Reading Books..'),
                 ),
@@ -164,13 +164,13 @@ class _AnaSayfaState extends State<AnaSayfa> {
             ),
             actions: [
               TextButton(
-                child: Text('Kapat'),
+                child: const Text('Kapat'),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
               ),
               ElevatedButton(
-                child: Text('Kaydet'),
+                child: const Text('Kaydet'),
                 onPressed: () {
                   setState(() {
                     notes.add({
@@ -204,7 +204,7 @@ class _AnaSayfaState extends State<AnaSayfa> {
             content: Column(
               children: [
                 Text(icerik),
-                Text(""),
+                const Text(""),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
@@ -216,7 +216,7 @@ class _AnaSayfaState extends State<AnaSayfa> {
             ),
             actions: [
               TextButton(
-                  child: Text("Kapat"),
+                  child: const Text("Kapat"),
                   onPressed: () {
                     Navigator.of(context).pop(); // Dialog'u kapat
                   })
@@ -242,33 +242,34 @@ class _AnaSayfaState extends State<AnaSayfa> {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(15),
               ),
-              title: Text("Not Güncelle"),
+              title: const Text("Not Güncelle"),
               content: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   TextField(
                     controller: baslikController,
-                    decoration: InputDecoration(labelText: 'Başlık'),
+                    decoration: const InputDecoration(labelText: 'Başlık'),
                   ),
                   TextField(
                     controller: icerikController,
-                    decoration: InputDecoration(labelText: 'Açıklama'),
+                    decoration: const InputDecoration(labelText: 'Açıklama'),
                   ),
                   TextField(
                     controller: anahtarController,
-                    decoration: InputDecoration(labelText: 'İçerik Konusu'),
+                    decoration:
+                        const InputDecoration(labelText: 'İçerik Konusu'),
                   ),
                 ],
               ),
               actions: [
                 TextButton(
-                  child: Text("Kapat"),
+                  child: const Text("Kapat"),
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
                 ),
                 ElevatedButton(
-                  child: Text("Güncelle"),
+                  child: const Text("Güncelle"),
                   onPressed: () {
                     setState(() {
                       notes[index]['baslik'] = baslikController.text;

@@ -1,8 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:taskly/ana_sayfa.dart';
 import 'package:http/http.dart' as http;
+
+import 'ana_sayfa.dart';
 
 class GirisYap extends StatefulWidget {
   const GirisYap({super.key});
@@ -12,8 +13,8 @@ class GirisYap extends StatefulWidget {
 }
 
 class _GirisYapState extends State<GirisYap> {
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
   bool isLoading = false;
   String errorMessage = "";
 
@@ -21,11 +22,11 @@ class _GirisYapState extends State<GirisYap> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           "Giriş Yap",
           style: TextStyle(fontSize: 30),
         ),
-        leading: Icon(Icons.account_circle),
+        leading: const Icon(Icons.account_circle),
         centerTitle: true,
         backgroundColor: Colors.blue[800],
       ),
@@ -37,48 +38,55 @@ class _GirisYapState extends State<GirisYap> {
             children: [
               Image.asset(
                 "assets/login_icon2.png",
-                width: 250,
-                height: 200,
+                width: MediaQuery.of(context).size.width * 0.5,
+                height: MediaQuery.of(context).size.height * 0.3,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               TextField(
                 controller: _emailController,
                 decoration: InputDecoration(
-                    labelText: "Kullanıcı Adı",
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(25))),
+                  labelText: "Kullanıcı Adı",
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(25),
+                  ),
+                ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               TextField(
                 controller: _passwordController,
                 obscureText: true,
                 decoration: InputDecoration(
-                    labelText: "Şifre",
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(25))),
+                  labelText: "Şifre",
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(25),
+                  ),
+                ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               if (errorMessage.isNotEmpty)
                 Text(
                   errorMessage,
-                  style: TextStyle(color: Colors.red),
+                  style: const TextStyle(color: Colors.red),
                 ),
               isLoading
-                  ? CircularProgressIndicator()
+                  ? const CircularProgressIndicator()
                   : ElevatedButton(
                       child: Text(
                         "Giriş Yap",
                         style: TextStyle(fontSize: 25, color: Colors.blue[800]),
                       ),
                       onPressed: () {
-                        login(_emailController.text.trim(),
-                            _passwordController.text.trim());
+                        login(
+                          _emailController.text.trim(),
+                          _passwordController.text,
+                          context,
+                        );
                       },
                     )
             ],
@@ -88,7 +96,7 @@ class _GirisYapState extends State<GirisYap> {
     );
   }
 
-  void login(String email, String password) async {
+  void login(String email, String password, BuildContext context) async {
     setState(() {
       isLoading = true;
     });
@@ -105,8 +113,10 @@ class _GirisYapState extends State<GirisYap> {
         );
         if (user != null) {
           //Giriş Başarılı ise;
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => AnaSayfa()));
+          if (context.mounted) {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const AnaSayfa()));
+          }
         } else {
           // Kullanıcı Bulunamadi ise;
           setState(() {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
-import 'package:taskly/model/note_model.dart';
+import 'package:taskly/model/note.dart';
 import 'package:taskly/view_model/note_view_model.dart';
 
 class AnaSayfa extends StatelessWidget {

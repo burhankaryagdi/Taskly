@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:taskly/giris_yap_sayfa.dart';
+import 'package:provider/provider.dart';
+import 'package:taskly/view/home_page.dart';
+import 'package:taskly/view_model/note_view_model.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,9 +12,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: GirisYap(),
-      debugShowCheckedModeBanner: false,
+    return ChangeNotifierProvider(
+      create: (context) => NoteViewModel(),
+      child: const MaterialApp(
+        home: AnaSayfa(),
+        debugShowCheckedModeBanner: false,
+      ),
     );
   }
 }

@@ -1,27 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
+
 import 'package:taskly/model/note.dart';
 import 'package:taskly/view_model/note_view_model.dart';
 
-class AnaSayfa extends StatelessWidget {
-  const AnaSayfa({super.key});
+class HomePage extends StatelessWidget {
+  const HomePage({super.key});
+
+  AppBar buildAppBar() {
+    return AppBar(
+      title: const Text("Taskly", style: TextStyle(fontSize: 35)),
+      centerTitle: true,
+      backgroundColor: Colors.teal,
+    );
+  }
+
+  FloatingActionButton buildFloatingActionButton(context) {
+    return FloatingActionButton(
+      backgroundColor: Colors.teal,
+      child: const Icon(Icons.add, color: Colors.white),
+      onPressed: () {
+        notEkle(context);
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.teal,
-        child: const Icon(Icons.add, color: Colors.white),
-        onPressed: () {
-          notEkle(context);
-        },
-      ),
-      appBar: AppBar(
-        title: const Text("Taskly", style: TextStyle(fontSize: 35)),
-        centerTitle: true,
-        backgroundColor: Colors.teal,
-      ),
+      floatingActionButton: buildFloatingActionButton(context),
+      appBar: buildAppBar(),
+
+      //BODY KODLARIM
       body: Consumer<NoteViewModel>(
         builder: (context, viewModel, child) {
           return viewModel.notes.isEmpty
@@ -39,13 +50,19 @@ class AnaSayfa extends StatelessWidget {
                           borderRadius: BorderRadius.circular(25)),
                       child: ListTile(
                         leading: const Icon(Icons.note),
-                        title: Text(note.baslik,style: TextStyle(fontSize: 20),),
+                        title: Text(
+                          note.baslik,
+                          style: TextStyle(fontSize: 20),
+                        ),
                         subtitle: Column(
                           children: [
                             Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(note.anahtar,style: TextStyle(fontSize: 15),),
+                                Text(
+                                  note.anahtar,
+                                  style: TextStyle(fontSize: 15),
+                                ),
                               ],
                             ),
                             Text('Eklenme Tarihi: ${note.tarih}',

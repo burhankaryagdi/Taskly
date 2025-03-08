@@ -1,5 +1,4 @@
-class User{
-
+class User {
   String username;
   String password;
   int expiresInMins = 30;
@@ -7,10 +6,6 @@ class User{
 
   // toJson metodu
   Map<dynamic, dynamic> toJson() {
-    return {
-      'username': username,
-      'password': password,
-      'expiresInMins' : 30
-    };
+    return {'username': username, 'password': password, 'expiresInMins': 30};
   }
 }

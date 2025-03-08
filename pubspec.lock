@@ -95,10 +95,10 @@ packages:
     dependency: "direct main"
     description:
       name: intl
-      sha256: "99f282cb0e02edcbbf8c6b3bbc7c90b65635156c412e58f3975a7e55284ce685"
+      sha256: "3df61194eb431efc39c4ceba583b95633a403f46c9fd341e550ce0bfa50e9aa5"
       url: "https://pub.dev"
     source: hosted
-    version: "0.20.0"
+    version: "0.20.2"
   leak_tracker:
     dependency: transitive
     description:

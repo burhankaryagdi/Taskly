@@ -15,7 +15,7 @@ class LoginViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void Login(User user, BuildContext context) async {
+  void login(User user, BuildContext context) async {
     //print(user.username);
     //print(user.password);
     setLoading(true);
@@ -31,14 +31,14 @@ class LoginViewModel extends ChangeNotifier {
 
     if (response.statusCode >= 200 && response.statusCode < 300) {
       Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => HomePage()));
+          context, MaterialPageRoute(builder: (context) => const HomePage()));
     } else if (response.statusCode >= 400 && response.statusCode < 500) {
       showDialog(
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              title: Text("Hatalı Giriş!"),
-              content: Text(
+              title: const Text("Hatalı Giriş!"),
+              content: const Text(
                 "Hatalı Kullanıcı Adı veya Şifre Denemesi.",
                 style: TextStyle(color: Colors.red),
               ),
@@ -47,7 +47,7 @@ class LoginViewModel extends ChangeNotifier {
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
-                  child: Text("Kapat"),
+                  child: const Text("Kapat"),
                 ),
               ],
             );

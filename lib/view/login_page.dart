@@ -20,7 +20,7 @@ class _LoginPageState extends State<LoginPage> {
 
         //APPBAR KODLAR
         appBar: AppBar(
-          title: Text(
+          title: const Text(
             "Giriş Yap!",
             style: TextStyle(fontSize: 30, color: Colors.white),
           ),
@@ -37,7 +37,7 @@ class _LoginPageState extends State<LoginPage> {
                 child: Column(
                   children: [
                     Image.asset("assets/login_icon2.png"),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     TextField(
@@ -47,7 +47,7 @@ class _LoginPageState extends State<LoginPage> {
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(30))),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     TextField(
@@ -57,10 +57,20 @@ class _LoginPageState extends State<LoginPage> {
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(30))),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     ElevatedButton(
+                      onPressed: viewModel.isLoading
+                          ? null
+                          : () {
+                              viewModel.login(
+                                User(
+                                    username: usernameController.text,
+                                    password: passwordController.text),
+                                context,
+                              );
+                            },
                       child: viewModel.isLoading
                           ? SizedBox(
                               width: 20,
@@ -75,16 +85,6 @@ class _LoginPageState extends State<LoginPage> {
                               style: TextStyle(
                                   fontSize: 25, color: Colors.blue[800]),
                             ),
-                      onPressed: viewModel.isLoading
-                          ? null
-                          : () {
-                              viewModel.Login(
-                                User(
-                                    username: usernameController.text,
-                                    password: passwordController.text),
-                                context,
-                              );
-                            },
                     ),
                   ],
                 ),

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:taskly/model/note.dart';
 
 class NoteViewModel extends ChangeNotifier {
-  List<Note> _notes = [];
+  final List<Note> _notes = [];
 
   List<Note> get notes => _notes;
 
